@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Video extends Model
 {
-   
+    //
     public function user()
     {
         return $this->belongsTo(User::class);
