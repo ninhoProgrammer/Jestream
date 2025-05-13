@@ -74,12 +74,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
     public function categories()
     {
         return $this->hasMany(Category::class);
     }
+    
     public function videos()
     {
         return $this->hasMany(Video::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }
