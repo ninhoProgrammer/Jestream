@@ -15,7 +15,7 @@
                     <p>Si tienes alguna duda, no dudes en ponerte en contacto con nosotros.</p>
                     <p>¡Disfruta de tu experiencia!</p>
                     <p>Atentamente, el equipo de soporte.</p>
-                </x-alert>
+                </x-alert2>
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->string('url');
-            $table->unserializedBigInteger('imageable_id');
+            $table->unsignedBigInteger('imageable_id');
             $table->string('imageable_type');
 
             $table->primary(['imageable_id', 'imageable_type']);
@@ -21,11 +21,4 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('images');
-    }
 };

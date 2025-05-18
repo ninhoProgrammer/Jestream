@@ -7,22 +7,26 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations.<z
      */
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 45);
-            $table->text('content', 255);
-
-            $table->unsignedBigInteger('user_id')->nullable(  );
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');    
-            $table->unsignedBigInteger('category_id')->nullable(  );
+            $table->string('title', 255);
+            $table->string('slug', 255);
+            $table->text('extract');
+            $table->longText('body');
+            $table->boolean('status')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });
+
+        
     }
 
     /**

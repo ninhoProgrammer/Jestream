@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Video extends Model
 {
+    use HasFactory;
     //
     public function user()
     {
@@ -22,5 +24,7 @@ class Video extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    
+    protected $fillable = [
+        'title',
+    ];
 }
