@@ -9,6 +9,19 @@ class Post extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'title',
+        'extract',
+        'body',
+        'status',
+
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
