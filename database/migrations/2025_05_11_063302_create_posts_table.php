@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255);
-            $table->text('extract');
-            $table->longText('body');
+            $table->text('extract')->nullable();
+            $table->longText('body')->nullable();
             $table->boolean('status')->default(0);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            
 
             $table->timestamps();
         });

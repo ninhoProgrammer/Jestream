@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -25,21 +27,26 @@ class PostController extends Controller
 		return view('admin.posts.create', compact('categories', 'tags'));
 	}
 
-	public function store(Request $request) 
+	public function store(StorePostRequest $request) 
     {
-        $request->validate([
-            'title' => 'required',
-            'slug' => 'required|unique:tags',
-            'extract' => 'required',
-            'body' => 'required',
-            'status' => 'required|in:published,draft',
-            
-        ]);
         $post = Post::create($request->all());
 
-        return redirect()->route('admin.posts.edit', compact('post'))
+        if ($request->hasFile('image')) {
+            $url = Storage::put('posts', $request->file('image'));
+            $post->image()->create([
+                'url' => $url,
+            ]);
+        }
+
+        ;
+	
+        if($request->tags){
+            $post->tags()->attach($request->tags);
+        }
+        
+        return redirect()->route('admin.posts.edit', $post)
             ->with('info', 'El post se creó con éxito');
-    } 
+        } 
 
 	public function show(Post $post) 
     {
@@ -48,21 +55,17 @@ class PostController extends Controller
 
 	public function edit(Post $post) 
     {
-        return view('admin.posts.edit', compact('post'));
+        $category = Category::pluck('name', 'id');
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('category','post'));
     } 
 
 	public function update(Request $request, Post $post) 
     {
-        $request->validate([
-            'title' => 'required',
-            'slug' => "required|unique:tags,slug,$post->id",
-            'extract' => 'required',
-            'body' => 'required',
-            'status' => 'required|in:published,draft',
-        ]);
+        $category = Category::pluck('name', 'id');
         $post->update($request->all());
 
-        return redirect()->route('admin.posts.edit', compact('post'))
+        return redirect()->route('admin.posts.edit', compact('category','post'))
             ->with('info', 'El post se actualizó con éxito');
     } 
 

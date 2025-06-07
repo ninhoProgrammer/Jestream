@@ -9,24 +9,24 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('admin.posts.store') }}" method="POST" autocomplete="off">
+        <form action="{{ route('admin.posts.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
             @csrf
 
             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
             <div class="form-group">
-                <label for="name">Nombre:</label>
-                <input type="text" name="title" id="title" class="form-control" placeholder="Ingrese el nombre del post" value="{{ old('name') }}">
+                <label for="name">Nombre</label>
+                <input type="text" name="title" id="title" class="form-control" placeholder="Ingrese el nombre de la categoría" value="{{ old('name') }}">
                 @error('name')
-                    <small class="text-danger">{{ $message }}</small>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-group">
                 <label for="slug">Slug</label>
-                <input type="text" name="slug" id="slug" class="form-control disabled" placeholder="Ingrese el slug del post" value="{{ old('slug') }}" readonly>
+                <input type="text" name="slug" id="slug" class="form-control" placeholder="Ingrese el slug de la categoría" value="{{ old('slug') }}" readonly>
                 @error('slug')
-                    <small class="text-danger">{{ $message }}</small>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -59,18 +59,28 @@
             <div class="form-group">
                 <p class="font-weight-bold">Estado</p>
                 <label>
-                    <input type="radio" name="status" value="false" {{ old('status', 1) == 1 ? 'checked' : '' }}>
+                    <input type="radio" name="status" value="0" {{ old('status', 0) == 0 ? 'checked' : '' }}>
                     Borrador
                 </label>
                 <label>
-                    <input type="radio" name="status" value="true" {{ old('status') == 2 ? 'checked' : '' }}>
+                    <input type="radio" name="status" value="1" {{ old('status') == 1 ? 'checked' : '' }}>
                     Publicado
                 </label>
                 @error('status')
                     <br>
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
-            </div>			
+            </div>		
+            
+            <div id="file" class="form-group">
+                <label for="image">Imagen:</label>
+                <img id="picture" src="{{ asset('XD.jpg') }}" alt="">
+                <input type="file" name="image" id="image" class="form-control-file">
+                @error('image')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>  
+
             
             <div class="form-group">
                 <label for="extract">Extracto:</label>
@@ -116,5 +126,23 @@
                 space: '-'
             });
         });
+
+        document.getElementById("file").addEventListener('change', cambiarImagen);
+
+        function cambiarImagen(event){
+
+            var file = event.target.files[0];
+
+            var reader = new FileReader();
+
+            reader.onload= (event)=>{
+
+                document.getElementById("picture").setAttribute('src', event.target.result)
+
+            };
+
+            reader.readAsDataURL(file);
+
+        }
     </script>
 @endsection

@@ -16,13 +16,13 @@
 
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('admin.categories.update', $category) }}" method="POST">
+        <form action="{{ route('admin.posts.update', $post) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="form-group">
                 <label for="name">Nombre</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Ingrese el nombre de la categoría" value="{{ old('name', $category->name) }}">
+                <input type="text" name="title" id="title" class="form-control" placeholder="Ingrese el nombre del post" value="{{ old('name', $post->name) }}">
                 @error('name')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -30,7 +30,7 @@
 
             <div class="form-group">
                 <label for="slug">Slug</label>
-                <input type="text" name="slug" id="slug" class="form-control" placeholder="Ingrese el slug de la categoría" value="{{ old('slug', $category->slug) }}" readonly>
+                <input type="text" name="slug" id="slug" class="form-control" placeholder="Ingrese el slug del post" value="{{ old('slug', $post->slug) }}" readonly>
                 @error('slug')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -58,7 +58,7 @@
     <script>
         $(document).ready(function() {
             console.log("Inicializando stringToSlug...");
-            $("#name").stringToSlug({
+            $("#title").stringToSlug({
                 setEvents: 'keyup keydown blur',
                 getPut: '#slug',
                 space: '-'

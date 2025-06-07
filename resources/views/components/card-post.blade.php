@@ -1,7 +1,13 @@
 @props(['post'])
 <article class="mb-8 bg-white shadow-lg rounded-lg overflow-hidden">
-    <img class="w-full h-80 object-cover object-center" 
-        src="{{ asset('XD.jpg') }}" alt="{{ $post->name }}">
+    @if ($post->image)
+        <img class="w-full h-80 object-cover object-center" src="{{ Storage::url($post->image->url) }}" alt="{{ $post->name }}">
+        
+    @else
+        <img class="w-full h-80 object-cover object-center" src="{{ asset('XD.jpg') }}" alt="{{ $post->name }}">4
+    @endif
+    
+
 
     <div class="px-6 py-4">
         <h1 class="font-bold text-xl mb-2">

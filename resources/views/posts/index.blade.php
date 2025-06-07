@@ -3,7 +3,7 @@
 	<div class="flex justify-center items-center py-8">
         <div class="grid grid-cols-3 gap-6">
             @foreach ($posts as $post)
-                <article class="w-full h-80 bg-cover bg-center @if($loop->first) md:col-span-2 @endif" style="background-image: url('{{ asset('XD.jpg') }}')">
+                <article class="w-full h-80 bg-cover bg-center @if($loop->first) md:col-span-2 @endif" style="background-image: url(@if($post->image6) '{{Storage::url($post->image->url)}}' @else '{{ asset('XD.jpg') }}' @endif);"
                     <div class="w-full h-full px-8 flex flex-col justify-center">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach ($post->tags as $tag)

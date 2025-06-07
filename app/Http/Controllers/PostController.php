@@ -15,12 +15,9 @@ class PostController extends Controller
         return view('posts.index' , compact('posts'));
     }
 
-  public function show(Post $post)
+    public function show(Post $post)
     {
-        $id = $post->id;
-        // Assuming you want to pass the post ID to the view
-        // You can also pass the entire post object if needed
-        return view('posts.show', ['post' => $post]);
+        return view('posts.show', compact('post'));
     }
     
 
