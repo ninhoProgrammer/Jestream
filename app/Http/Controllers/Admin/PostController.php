@@ -23,48 +23,48 @@ class PostController extends Controller
     {
 		$categories = Category::pluck('name', 'id');
 		$tags = Tag::all();
-	
-		return view('admin.posts.create', compact('categories', 'tags'));
+	    $post = new Post();
+		return view('admin.posts.create',  compact('post', 'categories', 'tags'));
 	}
 
 	public function store(StorePostRequest $request) 
     {
+        return Post::create($request->all());
         $post = Post::create($request->all());
 
         if ($request->hasFile('image')) {
-            $url = Storage::put('posts', $request->file('image'));
-            $post->image()->create([
-                'url' => $url,
-            ]);
+            $url = $request->file('image')->store('posts', 'public');
+            $post->image()->create(['url' => $url]);
         }
 
-        ;
-	
         if($request->tags){
             $post->tags()->attach($request->tags);
         }
         
-        return redirect()->route('admin.posts.edit', $post)
+        $post->tags->sync($request->tags);
+        return redirect()->route('admin.posts.index', $post)
             ->with('info', 'El post se creó con éxito');
-        } 
+    } 
 
 	public function show(Post $post) 
     {
         return view('admin.posts.show', compact('post'));
     } 
 
-	public function edit(Post $post) 
+    public function edit(Request $request, Post $post) 
     {
-        $category = Category::pluck('name', 'id');
+        $post->load('image');
+        $categories = Category::pluck('name', 'id');
         $tags = Tag::all();
-        return view('admin.posts.edit', compact('category','post'));
+        //$post->tags->sync($request->tags);
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     } 
 
 	public function update(Request $request, Post $post) 
     {
         $category = Category::pluck('name', 'id');
         $post->update($request->all());
-
+        $post->tags->sync($request->tags);
         return redirect()->route('admin.posts.edit', compact('category','post'))
             ->with('info', 'El post se actualizó con éxito');
     } 

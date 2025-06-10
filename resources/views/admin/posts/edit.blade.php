@@ -20,22 +20,8 @@
             @csrf
             @method('PUT')
 
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" name="title" id="title" class="form-control" placeholder="Ingrese el nombre del post" value="{{ old('name', $post->name) }}">
-                @error('name')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="slug">Slug</label>
-                <input type="text" name="slug" id="slug" class="form-control" placeholder="Ingrese el slug del post" value="{{ old('slug', $post->slug) }}" readonly>
-                @error('slug')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
+            @include('admin.posts.partials.form')
+            
             <button type="submit" class="btn btn-primary">Actualizar categoría</button>
         </form>
     </div>

@@ -15,6 +15,8 @@ class Post extends Model
         'extract',
         'body',
         'status',
+        'user_id',
+        'category_id',
 
     ];
 
@@ -34,7 +36,7 @@ class Post extends Model
     }
     
     public function image()
-    {
+  {
         return $this->morphOne(Image::class, 'imageable');
     }
     
