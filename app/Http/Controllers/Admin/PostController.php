@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\Category;
@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.posts.index')->only('index');
+        $this->middleware('can:admin.posts.create')->only('create', 'store');
+        $this->middleware('can:admin.posts.edit')->only('edit', 'update');
+        $this->middleware('can:admin.posts.destroy')->only('destroy');
+        $this->middleware('can:admin.posts.show')->only('show');
+    }
+
     public function index() 
     {
         // Fetch all posts with their related data
@@ -41,6 +50,8 @@ class PostController extends Controller
             $post->tags()->attach($request->tags);
         }
         
+        cache()->flush();
+
         $post->tags->sync($request->tags);
         return redirect()->route('admin.posts.index', $post)
             ->with('info', 'El post se creó con éxito');
@@ -65,6 +76,7 @@ class PostController extends Controller
         $category = Category::pluck('name', 'id');
         $post->update($request->all());
         $post->tags->sync($request->tags);
+        cache()->flush();
         return redirect()->route('admin.posts.edit', compact('category','post'))
             ->with('info', 'El post se actualizó con éxito');
     } 
@@ -72,7 +84,7 @@ class PostController extends Controller
 	public function destroy(Post $post) 
     {
         $post->delete();
-
+        cache()->flush();
         return redirect()->route('admin.posts.index')
             ->with('info', 'El post se eliminó con éxito');
     } 

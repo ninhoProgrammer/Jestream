@@ -350,7 +350,7 @@ return [
         ],
         [
             'text' => 'roles',
-            'url' => 'admin/roles',
+            'route' => 'admin.roles.index',
             'icon' => 'fas fa-fw fa-user-tag',
             'can' => 'admin.home',
         ],

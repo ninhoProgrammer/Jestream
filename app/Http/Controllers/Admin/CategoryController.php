@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Routing\Controller;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.categories.index')->only('index');
+        $this->middleware('can:admin.categories.create')->only('create', 'store');
+        $this->middleware('can:admin.categories.edit')->only('edit', 'update');
+        $this->middleware('can:admin.categories.destroy')->only('destroy');
+        $this->middleware('can:admin.categories.show')->only('show');
+    }
+
     public function index()
     {
         $categories = Category::all();
