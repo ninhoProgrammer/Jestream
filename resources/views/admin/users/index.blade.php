@@ -2,17 +2,14 @@
 
 @section('title', 'Mario Blog - Posts')
 
-@section('content_header')
-	@can('admin.posts.create')
-		<a class="btn btn-secondary btn-sm float-right" 
-		href="{{ route('admin.posts.create') }}">Nuevo post</a>
-	@endcan
-	
+{{-- @section('content_header')
+	<a class="btn btn-secondary btn-sm float-right" 
+		href="{{ route('admin.user.create') }}">Nuevo post</a>
 	<h1>Listado de Posts</h1>
-@stop
+@stop --}}
 
 @section('content')
-	@livewire('admin.posts-index')
+	@livewire('admin.users-index')
 @stop
 
 @section('css')

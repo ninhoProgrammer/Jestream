@@ -3,6 +3,7 @@
 @section('title', 'Coders Free')
 
 @section('content_header')
+<a class="btn btn-secondary btn-sm float-right" href="{{route('admin.categories.create')}}">Agregar categoría</a>
 <h1>Lista de Categorías</h1>
 @stop
 
@@ -16,9 +17,7 @@
 	
 <div class="card">
 	<div class="card-header">
-		<a class="btn btn-secondary"
-			href="{{route('admin.categories.create')}}"
-		>Agregar categoría</a>
+		
 	</div>
 	<div class="card-body">
 		<table class="table table-striped">

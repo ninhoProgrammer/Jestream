@@ -321,12 +321,14 @@ return [
             'text' => 'categories',
             'route' => 'admin.categories.index',
             'icon' => 'fas fa-fw fa-list',
+            'can' => 'admin.home',
         ],
         [
             'text' => 'Etiquetas',
             'route' => 'admin.tags.index',
             'icon' => 'far fa-fw fa-bookmark',
-            'active' => ['admin/tags*']
+            'active' => ['admin/tags*'],
+            'can' => 'admin.home',
         ],
         ['header' => 'Posts'],
         [
@@ -342,28 +344,33 @@ return [
         ['header' => 'Account'],
         [
             'text' => 'users',
-            'url' => 'admin/users',
+            'route' => 'admin.users.index',
             'icon' => 'fas fa-fw fa-users',
+            'can' => 'admin.home',
         ],
         [
             'text' => 'roles',
             'url' => 'admin/roles',
             'icon' => 'fas fa-fw fa-user-tag',
+            'can' => 'admin.home',
         ],
         [
             'text' => 'permissions',
             'url' => 'admin/permissions',
             'icon' => 'fas fa-fw fa-lock',
+            'can' => 'admin.home',
         ],
         [
             'text' => 'profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'admin.home',
         ],
         [
             'text' => 'change_password',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+            'can' => 'admin.home',
         ],
         
     ],
